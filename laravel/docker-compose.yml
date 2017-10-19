@@ -1,0 +1,24 @@
+version: "2"
+services:
+  data:
+    build: ./data
+    volumes:
+      - ./src:/var/www/html
+      - ./src:/usr/local/apache2/htdocs
+      - ./src:/app
+  fpm:
+    build: ./fpm
+    volumes_from:
+      - data
+  composer:
+    build: ./composer
+    volumes_from:
+      - data
+  httpd:
+    build: ./httpd
+    volumes_from:
+      - data
+    depends_on:
+      - fpm
+    ports:
+      - "3000:80"
