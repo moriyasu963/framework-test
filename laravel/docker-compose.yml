@@ -10,6 +10,9 @@ services:
     build: ./fpm
     volumes_from:
       - data
+    depends_on:
+      - mysql
+      - redis
   composer:
     build: ./composer
     volumes_from:
@@ -22,3 +25,9 @@ services:
       - fpm
     ports:
       - "3000:80"
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+  redis:
+    build: ./redis
