@@ -5,7 +5,7 @@ services:
     volumes:
       - ./src:/var/www/html
       - ./src:/usr/local/apache2/htdocs
-      - ./src:/app
+      - ./src/blog:/app
   fpm:
     build: ./fpm
     volumes_from:
