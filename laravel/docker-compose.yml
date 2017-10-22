@@ -17,6 +17,9 @@ services:
     build: ./composer
     volumes_from:
       - data
+    depends_on:
+      - mysql
+      - redis
   httpd:
     build: ./httpd
     volumes_from:
