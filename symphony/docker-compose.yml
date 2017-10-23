@@ -1,0 +1,32 @@
+version: "2"
+services:
+  data:
+    build: ./data
+    volumes:
+      - ./src:/var/www/html
+      - ./src:/usr/local/apache2/htdocs
+      - ./src:/app
+  fpm:
+    build: ./fpm
+    volumes_from:
+      - data
+    depends_on:
+      - mysql
+  composer:
+    build: ./composer
+    volumes_from:
+      - data
+    depends_on:
+      - mysql
+  httpd:
+    build: ./httpd
+    volumes_from:
+      - data
+    depends_on:
+      - fpm
+    ports:
+      - "3001:80"
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
